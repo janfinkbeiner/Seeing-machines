@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semantische Bildsuche — Seeing Machines</title>
+<style>
+  :root{
+    --ink:#1a1a1a; --muted:#666; --accent:#2E5C8A; --line:#e5e7eb;
+    --bg:#ffffff; --soft:#f6f8fb; --fail:#b23b3b; --ok:#2f7d4f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; color:var(--ink); background:var(--bg);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.65; font-size:17px;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:0 22px;}
+  header{text-align:center; padding:64px 22px 28px;}
+  h1{font-size:34px; line-height:1.2; margin:0 0 10px; color:var(--ink);}
+  .authors{font-size:19px; color:var(--ink); margin:6px 0;}
+  .meta{color:var(--muted); font-size:16px; margin:4px 0 18px;}
+  .links a{
+    display:inline-block; margin:6px 5px; padding:8px 16px; border:1px solid var(--line);
+    border-radius:22px; text-decoration:none; color:var(--accent); font-size:15px; background:var(--soft);
+  }
+  .links a:hover{background:#eef3f9;}
+  h2{font-size:24px; margin:44px 0 12px; color:var(--accent); border-bottom:2px solid var(--line); padding-bottom:6px;}
+  h3{font-size:19px; margin:26px 0 8px;}
+  p{margin:12px 0;}
+  .tagline{font-size:18px; color:var(--muted); font-style:italic; text-align:center; margin:14px 0 0;}
+  figure{margin:22px 0; text-align:center;}
+  figure img{max-width:100%; border:1px solid var(--line); border-radius:8px;}
+  figcaption{color:var(--muted); font-size:14px; margin-top:8px;}
+  .placeholder{
+    background:var(--soft); border:1px dashed #c9d4e2; border-radius:8px;
+    color:#8a97a8; padding:34px 18px; text-align:center; font-size:15px;
+  }
+  .abstract{background:var(--soft); border-left:4px solid var(--accent); padding:16px 20px; border-radius:0 8px 8px 0;}
+  .stats{width:100%; border-collapse:collapse; margin:16px 0; font-size:15px;}
+  .stats td{border:1px solid var(--line); padding:8px 12px;}
+  .stats td:first-child{background:var(--soft); font-weight:600; width:38%;}
+  .entry{border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin:20px 0; background:#fff;}
+  .badge{display:inline-block; font-size:13px; font-weight:700; padding:3px 10px; border-radius:12px; color:#fff;}
+  .badge.ok{background:var(--ok);} .badge.fail{background:var(--fail);}
+  .params{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:14px; color:var(--muted); margin:6px 0;}
+  .note{color:#93a0b0; font-style:italic;}
+  footer{color:var(--muted); font-size:14px; text-align:center; padding:40px 22px 60px;}
+  /* Pipeline SVG */
+  .diagram text{font-family:-apple-system,Segoe UI,Roboto,sans-serif;}
+  @media print{ .links{display:none;} body{font-size:12px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Semantische Bildsuche über ein kuratiertes Bildarchiv</h1>
+    <div class="authors">[DEIN NAME]</div>
+    <div class="meta">Level 1 — „Finder“ · CompSci for Designers 2 · [SEMESTER, z.&nbsp;B. SoSe&nbsp;2026]</div>
+    <div class="links">
+      <a href="[COLAB-LINK]">Colab-Notebook</a>
+      <a href="[GITHUB-REPO-LINK]">Code-Repository</a>
+      <a href="[KORPUS-ODER-SAMPLE-LINK]">Korpus (Sample)</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- TEASER -->
+  <figure>
+    <div class="placeholder">[TEASER-BILD hier: images/teaser.jpg — dein stärkstes Retrieval-Beispiel, Anfrage + Treffer]</div>
+    <p class="tagline">„[EIN-ZEILEN-TAGLINE, z.&nbsp;B. „Bilder finden mit Worten — was das Modell sieht und was nicht.“]“</p>
+  </figure>
+
+  <!-- ABSTRACT -->
+  <h2>Abstract</h2>
+  <p class="abstract">
+    [3–5 Sätze: Was ist das System? Eine semantische Bildsuche, die eine Textanfrage und alle Bilder eines
+    Archivs in denselben Embedding-Raum eines CLIP-/SigLIP-Modells abbildet und per Cosine-Similarity die
+    ähnlichsten Bilder zurückgibt. Nenne kurz deinen Korpus und was du herausgefunden hast.]
+  </p>
+
+  <!-- MOTIVATION + CORPUS -->
+  <h2>Motivation &amp; Corpus Statement</h2>
+  <h3>Motivation</h3>
+  <p>[Warum dieses Projekt / dieser Korpus? Welche Frage über „maschinelles Sehen“ wolltest du untersuchen?]</p>
+  <h3>Was ist die Sammlung?</h3>
+  <p>[Woraus besteht dein Korpus: Thema, Anzahl der Bilder, Art der Motive, Herkunft.]</p>
+  <h3>Warum diese Wahl?</h3>
+  <p>[Welche Retrieval-Phänomene wolltest du sichtbar machen — z.&nbsp;B. Mehrdeutigkeit, feine Unterschiede?]</p>
+  <h3>Wie wurde kuratiert?</h3>
+  <p>[Wie ausgewählt und strukturiert? Hast du Segmente gebildet — klare Anker, Verwechslungspartner,
+     mehrdeutige Begriffe, Ablenker?]</p>
+
+  <table class="stats">
+    <tr><td>Bilder gesamt</td><td>[N]</td></tr>
+    <tr><td>Formate</td><td>[z.&nbsp;B. .jpg, .png]</td></tr>
+    <tr><td>Segmente</td><td>[z.&nbsp;B. A: 30, B: 20, C: 15 …]</td></tr>
+    <tr><td>Modell</td><td>google/siglip-base-patch16-224</td></tr>
+  </table>
+
+  <!-- APPROACH + PIPELINE -->
+  <h2>Approach</h2>
+  <p>
+    Die Pipeline ist reines Retrieval — keine Beschriftung, keine Generierung. Jedes Bild wird
+    <strong>einmalig</strong> in einen Vektor eingebettet (und in Google Drive gecacht). Eine Textanfrage
+    wird in <strong>denselben</strong> Raum eingebettet; die <strong>Cosine-Similarity</strong> rankt alle
+    Bilder, und die <strong>top&#8209;k</strong> Treffer erscheinen in einer Gradio-Oberfläche.
+  </p>
+
+  <figure>
+    <svg class="diagram" viewBox="0 0 820 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pipeline-Diagramm">
+      <defs>
+        <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+          <path d="M0,0 L7,3 L0,6 Z" fill="#2E5C8A"/>
+        </marker>
+        <style>
+          .box{fill:#f6f8fb; stroke:#2E5C8A; stroke-width:1.5; rx:8;}
+          .boxg{fill:#eef3f9; stroke:#2E5C8A; stroke-width:1.5;}
+          .lbl{fill:#1a1a1a; font-size:13px; text-anchor:middle;}
+          .sub{fill:#666; font-size:11px; text-anchor:middle;}
+          .flow{stroke:#2E5C8A; stroke-width:1.6; fill:none; marker-end:url(#arw);}
+        </style>
+      </defs>
+
+      <!-- Query path (top) -->
+      <rect class="box" x="20" y="30" width="150" height="52" rx="8"/>
+      <text class="lbl" x="95" y="52">Textanfrage</text>
+      <text class="sub" x="95" y="70">„a dog in the snow“</text>
+
+      <rect class="box" x="210" y="30" width="160" height="52" rx="8"/>
+      <text class="lbl" x="290" y="52">Text-Encoder</text>
+      <text class="sub" x="290" y="70">SigLIP · Tokenisierung</text>
+
+      <rect class="box" x="410" y="30" width="150" height="52" rx="8"/>
+      <text class="lbl" x="485" y="52">Text-Embedding</text>
+      <text class="sub" x="485" y="70">L2-normiert</text>
+
+      <!-- Corpus path (bottom) -->
+      <rect class="boxg" x="20" y="200" width="150" height="52" rx="8"/>
+      <text class="lbl" x="95" y="222">Bildarchiv</text>
+      <text class="sub" x="95" y="240">50–150 Bilder</text>
+
+      <rect class="boxg" x="210" y="200" width="160" height="52" rx="8"/>
+      <text class="lbl" x="290" y="222">Bild-Encoder</text>
+      <text class="sub" x="290" y="240">einmalig · gecacht</text>
+
+      <rect class="boxg" x="410" y="200" width="150" height="52" rx="8"/>
+      <text class="lbl" x="485" y="222">Bild-Embeddings</text>
+      <text class="sub" x="485" y="240">Matrix (N × d)</text>
+
+      <!-- Merge -->
+      <rect class="box" x="610" y="115" width="180" height="54" rx="8"/>
+      <text class="lbl" x="700" y="137">Cosine-Similarity</text>
+      <text class="sub" x="700" y="155">Ranking → top&#8209;k</text>
+
+      <!-- arrows -->
+      <path class="flow" d="M170,56 L206,56"/>
+      <path class="flow" d="M370,56 L406,56"/>
+      <path class="flow" d="M170,226 L206,226"/>
+      <path class="flow" d="M370,226 L406,226"/>
+      <path class="flow" d="M560,56 L605,120"/>
+      <path class="flow" d="M560,226 L605,164"/>
+
+      <!-- output -->
+      <rect class="box" x="610" y="240" width="180" height="50" rx="8"/>
+      <text class="lbl" x="700" y="262">Gradio-Galerie</text>
+      <text class="sub" x="700" y="280">top&#8209;k Bilder + Scores</text>
+      <path class="flow" d="M700,169 L700,236"/>
+    </svg>
+    <figcaption>Abb. 1 — Retrieval-Pipeline: Anfrage und Archiv landen im selben Embedding-Raum; Cosine-Similarity rankt die Treffer.</figcaption>
+  </figure>
+
+  <p>
+    <strong>Parameter.</strong> <em>top&#8209;k</em> bestimmt, wie viele Treffer zurückkommen; der
+    <em>Threshold</em> filtert nach Mindestähnlichkeit. Da SigLIP-Cosine-Werte in einem engen, niedrigen
+    Band liegen, wurde der Threshold empirisch auf [DEIN WERT, z.&nbsp;B. 0,0–0,10] kalibriert.
+  </p>
+
+  <!-- RESULTS / ATLAS -->
+  <h2>Results — Retrieval Atlas</h2>
+  <p>
+    Dokumentierte Anfragen: gelungene Treffer <em>und</em> Fehlschläge, jeweils mit einer Begründung
+    im Embedding-Raum (warum liefert das Modell genau diese Bilder?).
+  </p>
+
+  <!-- Beispiel-Eintrag: Erfolg -->
+  <div class="entry">
+    <h3>Anfrage 1: „[Suchbegriff]“ &nbsp; <span class="badge ok">Erfolg</span></h3>
+    <div class="params">top_k = 5 · threshold = 0.0</div>
+    <div class="placeholder">[Screenshot der Treffer: images/q01.jpg]</div>
+    <p><strong>Beobachtung.</strong> [Was kam zurück? Passten die Bilder?]</p>
+    <p><strong>Warum (Embedding-Begründung).</strong> [2–4 Sätze: warum liegen diese Bilder nah an der Anfrage?]</p>
+  </div>
+
+  <!-- Beispiel-Eintrag: Fehlschlag (ausgefüllt als Muster) -->
+  <div class="entry">
+    <h3>Anfrage 2: „bank“ &nbsp; <span class="badge fail">Fehlschlag</span></h3>
+    <div class="params">top_k = 5 · threshold = 0.0</div>
+    <div class="placeholder">[Screenshot der Treffer: images/q02.jpg]</div>
+    <p><strong>Beobachtung.</strong> Gemischtes Ergebnis: 3 Sitzbänke und 2 Bankgebäude mit ähnlichen Scores (0,19–0,23).</p>
+    <p><strong>Warum (Embedding-Begründung).</strong> Das Wort „bank“ ist mehrdeutig. Der Text-Encoder bettet es
+       kontextlos ein; sein Vektor liegt zwischen den beiden Bedeutungsregionen im Raum. Dadurch sind Bilder
+       beider Kategorien ähnlich nah an der Anfrage — das Modell kann nicht wissen, welche gemeint ist. Ein
+       klassischer Polysemie-Fehlschlag.</p>
+  </div>
+
+  <p class="note">→ Kopiere den obigen <code>&lt;div class="entry"&gt;</code>-Block für jede weitere Anfrage
+     (mindestens 10 insgesamt). Nutze <span class="badge ok">Erfolg</span> bzw.
+     <span class="badge fail">Fehlschlag</span> passend.</p>
+
+  <!-- REFLECTION -->
+  <h2>Reflexion</h2>
+  <p>[Kurzer, persönlicher Rückblick: Was hat dich überrascht? Welche Design-Entscheidungen (Korpus, Modell,
+     Parameter) haben sich bewährt, welche würdest du anders machen? Ehrliche Sackgassen gehören dazu.]</p>
+
+  <!-- LIMITATIONS -->
+  <h2>Limitations</h2>
+  <p>[Ehrlich: Was kann das System nicht? Z.&nbsp;B. Mehrdeutigkeit, keine räumlichen Relationen
+     (Kompositionalität), Bias durch Trainingsdaten, kleiner Korpus, absolute Score-Werte nicht interpretierbar.]</p>
+
+  <!-- REFERENCES -->
+  <h2>Quellen &amp; Referenzen</h2>
+  <p>
+    Radford et&nbsp;al. (2021), <em>Learning Transferable Visual Models From Natural Language Supervision</em> (CLIP).<br>
+    Zhai et&nbsp;al. (2023), <em>Sigmoid Loss for Language Image Pre-Training</em> (SigLIP).<br>
+    [Weitere Quellen: verwendete Bibliotheken (transformers, gradio), Bildquellen des Korpus, Kursmaterial.]
+  </p>
+
+</div>
+
+<footer>
+  Erstellt für das Final Assignment „Seeing Machines“ · CompSci for Designers 2 · [DEIN NAME], [SEMESTER]
+</footer>
+
+</body>
+</html>
