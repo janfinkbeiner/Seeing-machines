@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Semantische Bildsuche — Seeing Machines</title>
+<title>Semantic image search — Seeing Machines</title>
 <style>
   :root{
     --ink:#1a1a1a; --muted:#666; --accent:#2E5C8A; --line:#e5e7eb;
@@ -55,9 +55,9 @@
 
 <header>
   <div class="wrap">
-    <h1>Semantische Bildsuche über ein kuratiertes Bildarchiv</h1>
-    <div class="authors">[DEIN NAME]</div>
-    <div class="meta">Level 1 — „Finder“ · CompSci for Designers 2 · [SEMESTER, z.&nbsp;B. SoSe&nbsp;2026]</div>
+    <h1>Semantic image search across a curated image archive</h1>
+    <div class="authors">Jan Finkbeiner</div>
+    <div class="meta">Level 1 — „Finder“ · CompSci for Designers 2 · SoSe 2026</div>
     <div class="links">
       <a href="[COLAB-LINK]">Colab-Notebook</a>
       <a href="[GITHUB-REPO-LINK]">Code-Repository</a>
@@ -70,33 +70,42 @@
 
   <!-- TEASER -->
   <figure>
-    <div class="placeholder">[TEASER-BILD hier: images/teaser.jpg — dein stärkstes Retrieval-Beispiel, Anfrage + Treffer]</div>
-    <p class="tagline">„[EIN-ZEILEN-TAGLINE, z.&nbsp;B. „Bilder finden mit Worten — was das Modell sieht und was nicht.“]“</p>
+    <div class="placeholder">Screenshots/A man eating.png</div>
+    <p class="tagline">Finding images with words - what the model finds and what it doesn't</p>
   </figure>
 
   <!-- ABSTRACT -->
   <h2>Abstract</h2>
   <p class="abstract">
-    [3–5 Sätze: Was ist das System? Eine semantische Bildsuche, die eine Textanfrage und alle Bilder eines
-    Archivs in denselben Embedding-Raum eines CLIP-/SigLIP-Modells abbildet und per Cosine-Similarity die
-    ähnlichsten Bilder zurückgibt. Nenne kurz deinen Korpus und was du herausgefunden hast.]
+    This project implements a semantic image search engine over a curated archive of 80 images:
+    Memories with close friends mixed with everyday items, AI brainrot and a series of self-portraits.
+    A joint text-image embedding model (SigLIP) encodes every image once into a shared vector space;
+    these embeddings are cached so the system is fully reproducable without re-running the encoder.
+    At query time, a natural-language prompt is tokenized and embedded into the same space and
+    cosine similarity rnks all images, returning the top-k results through a lightweight Gradio interface.
+    No captioning or text generation is involved - the pipeline is pure retrieval. Through a documented
+    retrieval atlas of successfull and failed queries, the project examines how the model "sees": 
+    where meaning aligns cleanly between words and images and where it breaks down. The result is a 
+    wprking prototype and an honest account of the strenghts and limits of embedding-based retrieval.
   </p>
 
   <!-- MOTIVATION + CORPUS -->
   <h2>Motivation &amp; Corpus Statement</h2>
   <h3>Motivation</h3>
-  <p>[Warum dieses Projekt / dieser Korpus? Welche Frage über „maschinelles Sehen“ wolltest du untersuchen?]</p>
-  <h3>Was ist die Sammlung?</h3>
-  <p>[Woraus besteht dein Korpus: Thema, Anzahl der Bilder, Art der Motive, Herkunft.]</p>
-  <h3>Warum diese Wahl?</h3>
-  <p>[Welche Retrieval-Phänomene wolltest du sichtbar machen — z.&nbsp;B. Mehrdeutigkeit, feine Unterschiede?]</p>
-  <h3>Wie wurde kuratiert?</h3>
-  <p>[Wie ausgewählt und strukturiert? Hast du Segmente gebildet — klare Anker, Verwechslungspartner,
-     mehrdeutige Begriffe, Ablenker?]</p>
+  <p>When we search for a picture, we rely on meaning. A computer only has numbers. Instead of simply trusting a model i 
+    wanted to to watch it succeed, hesitate and fail with interpreting human concepts. How different does "friendship" look
+    compared to a bussiness-meeting? What does the modell classify as an object a human can use as "headwear"?</p>
+  <h3>The Corpus</h3>
+  <p>The corpus consists of roughly four thematic components: human faces and bodies;
+    everyday objects such as cars, seating or clothing; people interacting with said
+    objects or with other people; and a set of contrast images — AI-generated figures,
+    ambiguous close-ups, and unusual concepts that rarely appear in any training
+    dataset. The idea behind this was to work out what the model focuses on, what it
+    confuses and what it may not understand at all.</p>
 
   <table class="stats">
     <tr><td>Bilder gesamt</td><td>[N]</td></tr>
-    <tr><td>Formate</td><td>[z.&nbsp;B. .jpg, .png]</td></tr>
+    <tr><td>Formate</td><td>.jpg, .png</td></tr>
     <tr><td>Segmente</td><td>[z.&nbsp;B. A: 30, B: 20, C: 15 …]</td></tr>
     <tr><td>Modell</td><td>google/siglip-base-patch16-224</td></tr>
   </table>
@@ -188,9 +197,9 @@
 
   <!-- Beispiel-Eintrag: Erfolg -->
   <div class="entry">
-    <h3>Anfrage 1: „[Suchbegriff]“ &nbsp; <span class="badge ok">Erfolg</span></h3>
-    <div class="params">top_k = 5 · threshold = 0.0</div>
-    <div class="placeholder">[Screenshot der Treffer: images/q01.jpg]</div>
+    <h3>Prompt 1: „Water“ &nbsp; <span class="badge ok">Success</span></h3>
+    <div class="params">top_k = 3 · threshold = 0.0</div>
+    <div class="placeholder">Screenshots/Water.png]</div>
     <p><strong>Beobachtung.</strong> [Was kam zurück? Passten die Bilder?]</p>
     <p><strong>Warum (Embedding-Begründung).</strong> [2–4 Sätze: warum liegen diese Bilder nah an der Anfrage?]</p>
   </div>
