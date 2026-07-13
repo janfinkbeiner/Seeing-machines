@@ -61,7 +61,7 @@
     <div class="links">
       <a href="[COLAB-LINK]">Colab-Notebook</a>
       <a href="[GITHUB-REPO-LINK]">Code-Repository</a>
-      <a href="[KORPUS-ODER-SAMPLE-LINK]">Korpus (Sample)</a>
+      <a href="[KORPUS-ODER-SAMPLE-LINK]">Corpus (Sample)</a>
     </div>
   </div>
 </header>
@@ -104,19 +104,18 @@
     confuses and what it may not understand at all.</p>
 
   <table class="stats">
-    <tr><td>Bilder gesamt</td><td>[N]</td></tr>
-    <tr><td>Formate</td><td>.jpg, .png</td></tr>
-    <tr><td>Segmente</td><td>[z.&nbsp;B. A: 30, B: 20, C: 15 …]</td></tr>
-    <tr><td>Modell</td><td>google/siglip-base-patch16-224</td></tr>
+    <tr><td>Total images</td><td>[N]</td></tr>
+    <tr><td>Formats</td><td>.jpg, .png</td></tr>
+    <tr><td>Model</td><td>google/siglip-base-patch16-224</td></tr>
   </table>
 
   <!-- APPROACH + PIPELINE -->
   <h2>Approach</h2>
   <p>
-    Die Pipeline ist reines Retrieval — keine Beschriftung, keine Generierung. Jedes Bild wird
-    <strong>einmalig</strong> in einen Vektor eingebettet (und in Google Drive gecacht). Eine Textanfrage
-    wird in <strong>denselben</strong> Raum eingebettet; die <strong>Cosine-Similarity</strong> rankt alle
-    Bilder, und die <strong>top&#8209;k</strong> Treffer erscheinen in einer Gradio-Oberfläche.
+    The pipeline is pure retrieval — no captioning, no generation. Each image is
+    <strong>embedded once</strong> into a vector (and cached in Google Drive). A text query
+    is embedded into the <strong>same</strong> space; <strong>cosine similarity</strong> ranks all
+    images, and the <strong>top&#8209;k</strong> matches appear in a Gradio interface.
   </p>
 
   <figure>
@@ -136,28 +135,28 @@
 
       <!-- Query path (top) -->
       <rect class="box" x="20" y="30" width="150" height="52" rx="8"/>
-      <text class="lbl" x="95" y="52">Textanfrage</text>
+      <text class="lbl" x="95" y="52">Text prompt</text>
       <text class="sub" x="95" y="70">„a dog in the snow“</text>
 
       <rect class="box" x="210" y="30" width="160" height="52" rx="8"/>
-      <text class="lbl" x="290" y="52">Text-Encoder</text>
-      <text class="sub" x="290" y="70">SigLIP · Tokenisierung</text>
+      <text class="lbl" x="290" y="52">Text-encoder</text>
+      <text class="sub" x="290" y="70">SigLIP · Tokenization</text>
 
       <rect class="box" x="410" y="30" width="150" height="52" rx="8"/>
-      <text class="lbl" x="485" y="52">Text-Embedding</text>
-      <text class="sub" x="485" y="70">L2-normiert</text>
+      <text class="lbl" x="485" y="52">Text-embedding</text>
+      <text class="sub" x="485" y="70">L2-normalized</text>
 
       <!-- Corpus path (bottom) -->
       <rect class="boxg" x="20" y="200" width="150" height="52" rx="8"/>
-      <text class="lbl" x="95" y="222">Bildarchiv</text>
-      <text class="sub" x="95" y="240">50–150 Bilder</text>
+      <text class="lbl" x="95" y="222">Image corpus</text>
+      <text class="sub" x="95" y="240">50–150 images</text>
 
       <rect class="boxg" x="210" y="200" width="160" height="52" rx="8"/>
-      <text class="lbl" x="290" y="222">Bild-Encoder</text>
-      <text class="sub" x="290" y="240">einmalig · gecacht</text>
+      <text class="lbl" x="290" y="222">Image-encoder</text>
+      <text class="sub" x="290" y="240">once · cashed</text>
 
       <rect class="boxg" x="410" y="200" width="150" height="52" rx="8"/>
-      <text class="lbl" x="485" y="222">Bild-Embeddings</text>
+      <text class="lbl" x="485" y="222">Image-embeddings</text>
       <text class="sub" x="485" y="240">Matrix (N × d)</text>
 
       <!-- Merge -->
@@ -175,11 +174,11 @@
 
       <!-- output -->
       <rect class="box" x="610" y="240" width="180" height="50" rx="8"/>
-      <text class="lbl" x="700" y="262">Gradio-Galerie</text>
-      <text class="sub" x="700" y="280">top&#8209;k Bilder + Scores</text>
+      <text class="lbl" x="700" y="262">Gradio-gallery</text>
+      <text class="sub" x="700" y="280">top&#8209;k Images + Scores</text>
       <path class="flow" d="M700,169 L700,236"/>
     </svg>
-    <figcaption>Abb. 1 — Retrieval-Pipeline: Anfrage und Archiv landen im selben Embedding-Raum; Cosine-Similarity rankt die Treffer.</figcaption>
+    <figcaption>Fig. 1 — Retrieval pipeline: query and archive land in the same embedding space; cosine similarity ranks the matches.</figcaption>
   </figure>
 
   <p>
@@ -191,8 +190,7 @@
   <!-- RESULTS / ATLAS -->
   <h2>Results — Retrieval Atlas</h2>
   <p>
-    Dokumentierte Anfragen: gelungene Treffer <em>und</em> Fehlschläge, jeweils mit einer Begründung
-    im Embedding-Raum (warum liefert das Modell genau diese Bilder?).
+    Representative Documentation: Successes <em>and</em> Failures, with reasoning
   </p>
 
   <!-- Beispiel-Eintrag: Erfolg -->
@@ -200,48 +198,76 @@
     <h3>Prompt 1: „Water“ &nbsp; <span class="badge ok">Success</span></h3>
     <div class="params">top_k = 3 · threshold = 0.0</div>
     <div class="placeholder">Screenshots/Water.png]</div>
-    <p><strong>Beobachtung.</strong> [Was kam zurück? Passten die Bilder?]</p>
-    <p><strong>Warum (Embedding-Begründung).</strong> [2–4 Sätze: warum liegen diese Bilder nah an der Anfrage?]</p>
+    <p><strong>Observation</strong> Succesfully assignes "Water" to a river, a cooking pot and water bottles.</p>
+    <p><strong>Rationale</strong> Established concept, colour indications,wave patterns or reflections.</p>
   </div>
 
   <!-- Beispiel-Eintrag: Fehlschlag (ausgefüllt als Muster) -->
   <div class="entry">
-    <h3>Anfrage 2: „bank“ &nbsp; <span class="badge fail">Fehlschlag</span></h3>
-    <div class="params">top_k = 5 · threshold = 0.0</div>
-    <div class="placeholder">[Screenshot der Treffer: images/q02.jpg]</div>
-    <p><strong>Beobachtung.</strong> Gemischtes Ergebnis: 3 Sitzbänke und 2 Bankgebäude mit ähnlichen Scores (0,19–0,23).</p>
-    <p><strong>Warum (Embedding-Begründung).</strong> Das Wort „bank“ ist mehrdeutig. Der Text-Encoder bettet es
-       kontextlos ein; sein Vektor liegt zwischen den beiden Bedeutungsregionen im Raum. Dadurch sind Bilder
-       beider Kategorien ähnlich nah an der Anfrage — das Modell kann nicht wissen, welche gemeint ist. Ein
-       klassischer Polysemie-Fehlschlag.</p>
+    <h3>Prompt 2: „Aunt“ &nbsp; <span class="badge fail">Failed</span></h3>
+    <div class="params">top_k = 3 · threshold = 0.0</div>
+    <div class="placeholder">Screenshots/Aunt.png</div>
+    <p><strong>Observation</strong> Comparably high similarity-scores for unrelated AI-images. </p>
+    <p><strong>Rationale</strong> Vague concept, does seem to connect "aunt" loosely to a human but does
+      not store it close to images with female appearance.</p>
   </div>
 
+    <div class="entry">
+    <h3>Prompt 3: „Head-wear“ &nbsp; <span class="badge fail">Mixed</span></h3>
+    <div class="params">top_k = 5 · threshold = 0.02</div>
+    <div class="placeholder">Screenshots/Headwear.png</div>
+    <p><strong>Observation</strong> Succeeds with 3/5 </p>
+    <p><strong>Rationale</strong> Seems to understand the concept of "headwear" by locating 3 images of me
+      wearing items with a similar shape on my head. By choosing the dinner bell it prooves to disregard material.
+      The image of the container box is hard to explain, i suspect that the file name "container" might have had
+      an influence (since head-wear usually "contains" a head).</p>
+  </div>
+  
+  <div class="entry">
+    <h3>Prompt 4: „Hair“ &nbsp; <span class="badge fail">Mixed</span></h3>
+    <div class="params">top_k = 3 · threshold = 0.02</div>
+    <div class="placeholder">Screenshots/Headwear.png</div>
+    <p><strong>Observation</strong> Connects hair stronly with a human head </p>
+    <p><strong>Rationale</strong> The concept of hair being attached to the head of a human and framing the face 
+      seems to account for more than the general appearance, colour or structure of hair itself. It's ironic how
+      especially the imagine of my glizzening bald head rates closest to hair; but maybe I underestimate the model's 
+      concept of humour.</p>
+  </div>
+  
   <p class="note">→ Kopiere den obigen <code>&lt;div class="entry"&gt;</code>-Block für jede weitere Anfrage
      (mindestens 10 insgesamt). Nutze <span class="badge ok">Erfolg</span> bzw.
      <span class="badge fail">Fehlschlag</span> passend.</p>
 
   <!-- REFLECTION -->
-  <h2>Reflexion</h2>
-  <p>[Kurzer, persönlicher Rückblick: Was hat dich überrascht? Welche Design-Entscheidungen (Korpus, Modell,
-     Parameter) haben sich bewährt, welche würdest du anders machen? Ehrliche Sackgassen gehören dazu.]</p>
-
+  <h2>Reflection</h2>
+  <p>In retrospect, the experiment gave me valuable hands-on insight. I found it
+    particularly interesting that for very familiar concepts or subjects, surface
+    characteristics tend to be decisive, whereas for vaguer or less common concepts,
+    it is the associated concepts that carry more weight. Overall, both the corpus and
+    the model performed well. Across my series of tests, the parameters made relatively
+    little difference, yet it was still valuable to see what they are used for. A future
+    dataset could be designed specifically to explore these parameters further — for
+    example, a larger image set containing several very similar images.
   <!-- LIMITATIONS -->
   <h2>Limitations</h2>
-  <p>[Ehrlich: Was kann das System nicht? Z.&nbsp;B. Mehrdeutigkeit, keine räumlichen Relationen
-     (Kompositionalität), Bias durch Trainingsdaten, kleiner Korpus, absolute Score-Werte nicht interpretierbar.]</p>
+  <p>The system yielded only limited findings on ambiguity and composition. Overall,
+    the corpus was likely too small and too fragmented to reveal deeper or more
+    specific patterns.</p>
 
   <!-- REFERENCES -->
-  <h2>Quellen &amp; Referenzen</h2>
+  <h2>Sources &amp; References</h2>
   <p>
-    Radford et&nbsp;al. (2021), <em>Learning Transferable Visual Models From Natural Language Supervision</em> (CLIP).<br>
     Zhai et&nbsp;al. (2023), <em>Sigmoid Loss for Language Image Pre-Training</em> (SigLIP).<br>
-    [Weitere Quellen: verwendete Bibliotheken (transformers, gradio), Bildquellen des Korpus, Kursmaterial.]
+    SigLIP model: google/siglip-base-patch16-224, Hugging Face.
+    Software: Hugging Face Transformers, Gradio, PyTorch, Google Colab.
+    Course materials: CompScie for Designers 2, starter notebook provided in class.
+    Image corpus: Taken by myself with a smartphone camera; Unsplash; AI generated Images: Perchance
   </p>
 
 </div>
 
 <footer>
-  Erstellt für das Final Assignment „Seeing Machines“ · CompSci for Designers 2 · [DEIN NAME], [SEMESTER]
+  Created to the „Seeing Machines“ final assignment · CompSci for Designers 2 · Jan Finkbeiner, SoSe 2026
 </footer>
 
 </body>
