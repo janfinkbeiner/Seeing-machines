@@ -61,7 +61,7 @@
     <div class="links">
       <a href="https://colab.research.google.com/drive/17Ug3-jsO6cx0C0w7Se5s2zrQFOqUqzB_?usp=sharing">Colab-Notebook</a>
       <a href="https://github.com/janfinkbeiner/Seeing-machines">Code-Repository</a>
-      <a href="https://drive.google.com/file/d/11x9BRp-PVxwSv8mVu3sWe21nqMPO7Blx/view?usp=share_link">Corpus (Sample)</a>
+      <a href="https://drive.google.com/drive/folders/1jYir0z5GwI8Mmy1gKw1oqAI9EezhS5o7?usp=share_link">Corpus (Sample)</a>
     </div>
   </div>
 </header>
@@ -181,10 +181,10 @@
     <figcaption>Fig. 1 — Retrieval pipeline: query and archive land in the same embedding space; cosine similarity ranks the matches.</figcaption>
   </figure>
 
-  <p>
-    <strong>Parameter.</strong> <em>top&#8209;k</em> bestimmt, wie viele Treffer zurückkommen; der
-    <em>Threshold</em> filtert nach Mindestähnlichkeit. Da SigLIP-Cosine-Werte in einem engen, niedrigen
-    Band liegen, wurde der Threshold empirisch auf [DEIN WERT, z.&nbsp;B. 0,0–0,10] kalibriert.
+ <p>
+    <strong>Parameters.</strong> <em>top&#8209;k</em> determines how many results are returned; the
+    <em>threshold</em> filters by minimum similarity. Since SigLIP cosine values lie within a narrow, low
+    band, the threshold was empirically calibrated to 0.0–0.08].
   </p>
 
   <!-- RESULTS / ATLAS -->
@@ -233,10 +233,6 @@
       concept of humour.</p>
   </div>
   
-  <p class="note">→ Kopiere den obigen <code>&lt;div class="entry"&gt;</code>-Block für jede weitere Anfrage
-     (mindestens 10 insgesamt). Nutze <span class="badge ok">Erfolg</span> bzw.
-     <span class="badge fail">Fehlschlag</span> passend.</p>
-
   <!-- REFLECTION -->
   <h2>Reflection</h2>
   <p>In retrospect, the experiment gave me valuable hands-on insight. I found it
